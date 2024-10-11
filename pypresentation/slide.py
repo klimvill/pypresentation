@@ -136,7 +136,7 @@ class TitleSlide(Slide):
 		box (Box, optional): Экземпляр Box, который определяет внешний вид границы заголовка. По умолчанию box.ROUNDED.
 		style (str, optional): Стиль заголовка (границы и содержимого). По умолчанию "none".
 		border_style (str, optional): Стиль границы заголовка. По умолчанию "none".
-		padding (PaddingDimensions, optional): Необязательное отступление вокруг заголовка. По умолчанию (0, 1).
+		padding (PaddingDimensions, optional): Отступы вокруг заголовка. По умолчанию (0, 1).
 	"""
 
 	def __init__(
@@ -177,7 +177,7 @@ class TitleImageSlide(Slide):
 
 	Args:
 		title (str): Заголовок слайда.
-		path (str): Путь к файлу изображения.
+		path (str): Путь к файлу с изображением.
 		subtitle (RenderableType, optional): Подзаголовок слайда. По умолчанию пустая строка.
 		side (Literal["right", "left"], optional): Расположение изображения на слайде. По умолчанию "left".
 		resize (tuple[int, int], optional): Набор значений (ширина, высота) для изменения размера изображения.
@@ -185,7 +185,7 @@ class TitleImageSlide(Slide):
 		box (Box, optional): Экземпляр Box, который определяет внешний вид границы заголовка. По умолчанию box.ROUNDED.
 		style (str, optional): Стиль заголовка (границы и содержимое). По умолчанию "none".
 		border_style (str, optional): Стиль границы заголовка. По умолчанию "none".
-		padding (PaddingDimensions, optional): Необязательное отступление вокруг заголовка. По умолчанию (0, 1).
+		padding (PaddingDimensions, optional): Отступы вокруг заголовка. По умолчанию (0, 1).
 	"""
 
 	def __init__(
