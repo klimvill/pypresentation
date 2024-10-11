@@ -274,7 +274,14 @@ class StandardSlide(Slide):
 
 	def create_slide(self, slide_number: int, total_slides: int, progress: tuple[int, int] = None) -> Layout:
 		layout = Layout()
-		layout.split(Layout(name='header', size=3), Layout(name='body'), Layout(name='footer', size=2))
+
+		if not self.progress_visible:
+			layout.split(Layout(name='header', size=3), Layout(name='body'))
+		else:
+			layout.split(Layout(name='header', size=3), Layout(name='body'), Layout(name='footer', size=2))
+
+			layout['footer'].update(Progress(progress, self.complete_style, self.finished_style))
+			layout['footer'].visible = progress
 
 		layout['header'].update(
 			StandartHeader(
@@ -287,9 +294,6 @@ class StandardSlide(Slide):
 			)
 		)
 		layout['body'].update(autoscroll(layout, layout['body'], self.text))
-		layout['footer'].update(Progress(progress, self.complete_style, self.finished_style))
-
-		layout['footer'].visible = progress and self.progress_visible
 
 		return layout
 
@@ -343,14 +347,20 @@ class StandardImageSlide(Slide):
 		self._image: Pixels = Pixels.from_image_path(self.path, resize=self.resize)
 
 	def create_slide(self, slide_number: int, total_slides: int, progress: tuple[int, int] = None) -> Layout:
-		column = (Layout(name='text'), Layout(name='image'))
-
-		if self.side == 'left':
-			column = column[::-1]
-
 		layout = Layout()
-		layout.split(Layout(name='header', size=3), Layout(name='body'), Layout(name='footer', size=2))
-		layout['body'].split_row(*column)
+
+		if not self.progress_visible:
+			layout.split(Layout(name='header', size=3), Layout(name='body'))
+		else:
+			layout.split(Layout(name='header', size=3), Layout(name='body'), Layout(name='footer', size=2))
+
+			layout['footer'].update(Progress(progress, self.complete_style, self.finished_style))
+			layout['footer'].visible = progress and self.progress_visible
+
+		if self.side == 'right':
+			layout['body'].split_row(Layout(name='text'), Layout(name='image'))
+		else:
+			layout['body'].split_row(Layout(name='image'), Layout(name='text'))
 
 		layout['header'].update(
 			StandartHeader(
@@ -364,8 +374,5 @@ class StandardImageSlide(Slide):
 		)
 		layout['body']['image'].update(Align.center(self._image, vertical='middle'))
 		layout['body']['text'].update(autoscroll(layout, layout['body']['text'], self.text))
-		layout['footer'].update(Progress(progress, self.complete_style, self.finished_style))
-
-		layout['footer'].visible = progress and self.progress_visible
 
 		return layout
