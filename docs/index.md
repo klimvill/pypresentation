@@ -40,7 +40,7 @@ if __name__ == "__main__":
 
 ### TitleSlide
 
-![TitleSlide.png](https://ibb.org.ru/images/2024/10/10/TitleSlide.png)
+![TitleSlide.png](images/TitleSlide.png)
 
 ```python
 from pypresentation.slide import TitleSlide
@@ -54,7 +54,7 @@ def generate_subtitle() -> Table:
 
 
 title_slide = TitleSlide(
-	"Кошки в Древнем Египте  ≽^•⩊•^≼",
+    "Кошки в Древнем Египте ฅ^•ﻌ•^ฅ",
 	subtitle=generate_subtitle(),
 	border_style="#119999"
 )
