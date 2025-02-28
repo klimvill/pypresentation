@@ -21,6 +21,8 @@ python -m pypresentation
 
 ## Простой пример
 
+![example.png](docs/images/simple_example.png)
+
 ```python
 from pypresentation import Presentation
 from pypresentation.slide import TitleSlide
@@ -30,7 +32,7 @@ from rich.table import Table, Column
 def generate_subtitle() -> Table:
 	table = Table(Column(justify="center"), box=None)
 
-	table.add_row("[blue]Привет, новичок! 👋")
+	table.add_row("[#aac7ff]Привет, новичок! 👋")
 	table.add_row("[grey66]https://github.com/klimvill/pypresentation")
 
 	return table
@@ -38,9 +40,9 @@ def generate_subtitle() -> Table:
 
 presentation = Presentation()
 title_slide = TitleSlide(
-	"[cornflower_blue]pypresentation[/] - библиотека для создания презентаций",
+	"[#aac7ff]pypresentation[/] - библиотека для создания презентаций",
 	generate_subtitle(),
-	border_style="medium_purple4"
+	border_style="#74777f"
 )
 
 presentation.add(title_slide)
