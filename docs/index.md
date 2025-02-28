@@ -54,9 +54,9 @@ def generate_subtitle() -> Table:
 
 
 title_slide = TitleSlide(
-    "Кошки в Древнем Египте ฅ^•ﻌ•^ฅ",
+    "Кошки в Древнем Египте [#dbc66e]ฅ^•ﻌ•^ฅ",
 	subtitle=generate_subtitle(),
-	border_style="#119999"
+	border_style="#969080"
 )
 
 title_slide.show()
@@ -73,7 +73,7 @@ title_slide.show()
 
 ### TitleImageSlide
 
-![TitleImageSlide.png](https://ibb.org.ru/images/2024/10/11/TitleImageSlide.png)
+![TitleImageSlide.png](images/TitleImageSlide.png)
 
 ```python
 from pypresentation.slide import TitleImageSlide
@@ -101,7 +101,7 @@ title_image_slide = TitleImageSlide(
 title_image_slide.show()
 ```
 
-Картинку для этого слайда можете скачать [тут](https://ibb.org.ru/images/2024/10/11/brain.png).
+Картинку для этого слайда можете скачать [тут](./images/brain.png).
 
 Если вы запустите этот код, то слайд может отличаться от картинки, в этом случае рекомендую поиграться с размером
 шрифта в вашем терминале.

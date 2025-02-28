@@ -38,15 +38,13 @@ def generate_subtitle() -> Table:
 	return table
 
 
-presentation = Presentation()
 title_slide = TitleSlide(
 	"[#aac7ff]pypresentation[/] - библиотека для создания презентаций",
 	generate_subtitle(),
 	border_style="#74777f"
 )
 
-presentation.add(title_slide)
-presentation.start()
+title_slide.show()
 ```
 
 ## Документация
