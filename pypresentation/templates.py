@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import Optional, Tuple
 
 import rich.repr
 from rich.align import Align
@@ -23,7 +24,7 @@ class Template(ABC):
 		"""
 
 
-class StandartHeader(Template):
+class StandardHeader(Template):
 	"""
 	Стандартный заголовок слайда.
 
@@ -80,13 +81,14 @@ class Progress(Template):
 		finished_style (str, optional): Стиль завершенного прогресс бара. По умолчанию "green".
 	"""
 
-	def __init__(self, progress: tuple[int, int] | None, complete_style: str = 'yellow', finished_style: str = 'green'):
+	def __init__(self, progress: Optional[Tuple[int, int]], complete_style: str = 'yellow',
+				 finished_style: str = 'green'):
 		self.progress = progress
 
 		self.complete_style = complete_style
 		self.finished_style = finished_style
 
-	def __rich__(self) -> Table:
+	def __rich__(self) -> Align:
 		grid = Table.grid('', '', padding=(0, 2, 0, 1), pad_edge=True)
 
 		if self.progress:

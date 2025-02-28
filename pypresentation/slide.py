@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Literal, Callable, Union
+from typing import Literal, Callable, Union, List, Optional, Tuple
 
 import rich.repr
 from rich import print
@@ -14,7 +14,7 @@ from rich.segment import SegmentLines
 from rich.style import StyleType
 from rich_pixels import Pixels
 
-from .templates import Progress, StandartHeader
+from .templates import Progress, StandardHeader
 
 
 def autoscroll(layout: Layout, sub_layout: Layout, text: RenderableType) -> SegmentLines:
@@ -47,7 +47,7 @@ class Slide(ABC):
 	"""Базовый класс для слайдов."""
 
 	@abstractmethod
-	def create_slide(self, slide_number: int, total_slides: int, progress: tuple[int, int] = None) -> Layout:
+	def create_slide(self, slide_number: int, total_slides: int, progress: Tuple[int, int] = None) -> Layout:
 		"""Отвечает за создание слайда.
 
 		Args:
@@ -88,7 +88,7 @@ class SlideWithSteps(Slide):
 		steps (Union[list[Slide], Callable[[], Slide]]): Слайды для отображения.
 	"""
 
-	def __init__(self, steps: Union[list[Slide], Callable[[], Slide]]):
+	def __init__(self, steps: Union[List[Slide], Callable[[], List[Slide]]]):
 		self._steps = steps if isinstance(steps, list) else [_ for _ in steps()]
 		self._index = 0
 
@@ -104,7 +104,7 @@ class SlideWithSteps(Slide):
 			return True
 		return False
 
-	def create_slide(self, slide_number: int, total_slides: int, progress: tuple[int, int] = None) -> Layout:
+	def create_slide(self, slide_number: int, total_slides: int, progress: Tuple[int, int] = None) -> Layout:
 		return self._steps[self._index].create_slide(slide_number, total_slides, (self._index + 1, len(self._steps)))
 
 
@@ -117,7 +117,7 @@ class ImageSlide(Slide):
 			По умолчанию размер экрана.
 	"""
 
-	def __init__(self, path: str, resize: tuple[int, int] | None = None):
+	def __init__(self, path: str, resize: Optional[Tuple[int, int]] = None):
 		self.path = path
 		self.resize = resize or (Console().width, Console().height * 2)
 
@@ -157,7 +157,7 @@ class TitleSlide(Slide):
 		self.border_style = border_style
 		self.padding = padding
 
-	def create_slide(self, slide_number: int, total_slides: int, progress: tuple[int, int] = None) -> Layout:
+	def create_slide(self, slide_number: int, total_slides: int, progress: Tuple[int, int] = None) -> Layout:
 		layout = Layout()
 		layout.split(Layout(name='title'), Layout(name='subtitle'))
 
@@ -195,7 +195,7 @@ class TitleImageSlide(Slide):
 			subtitle: RenderableType = '',
 			*,
 			side: Literal['right', 'left'] = 'left',
-			resize: tuple[int, int] = None,
+			resize: Tuple[int, int] = None,
 			box: Box = ROUNDED,
 			style: StyleType = 'none',
 			border_style: StyleType = 'none',
@@ -214,7 +214,7 @@ class TitleImageSlide(Slide):
 
 		self._image: Pixels = Pixels.from_image_path(self.path, resize=self.resize)
 
-	def create_slide(self, slide_number: int, total_slides: int, progress: tuple[int, int] = None) -> Layout:
+	def create_slide(self, slide_number: int, total_slides: int, progress: Tuple[int, int] = None) -> Layout:
 		column = (Layout(name='text'), Layout(name='image'))
 
 		if self.side == 'left':
@@ -272,7 +272,7 @@ class StandardSlide(Slide):
 		self.complete_style = complete_style
 		self.finished_style = finished_style
 
-	def create_slide(self, slide_number: int, total_slides: int, progress: tuple[int, int] = None) -> Layout:
+	def create_slide(self, slide_number: int, total_slides: int, progress: Tuple[int, int] = None) -> Layout:
 		layout = Layout()
 
 		if not self.progress_visible:
@@ -284,7 +284,7 @@ class StandardSlide(Slide):
 			layout['footer'].visible = progress
 
 		layout['header'].update(
-			StandartHeader(
+			StandardHeader(
 				self.title,
 				slide_number,
 				total_slides,
@@ -323,7 +323,7 @@ class StandardImageSlide(Slide):
 			path: str,
 			*,
 			side: Literal['right', 'left'] = 'right',
-			resize: tuple[int, int] = None,
+			resize: Tuple[int, int] = None,
 			info_visible: bool = True,
 			progress_visible: bool = True,
 			info_style: StyleType = 'dim',
@@ -346,7 +346,7 @@ class StandardImageSlide(Slide):
 
 		self._image: Pixels = Pixels.from_image_path(self.path, resize=self.resize)
 
-	def create_slide(self, slide_number: int, total_slides: int, progress: tuple[int, int] = None) -> Layout:
+	def create_slide(self, slide_number: int, total_slides: int, progress: Tuple[int, int] = None) -> Layout:
 		layout = Layout()
 
 		if not self.progress_visible:
@@ -363,7 +363,7 @@ class StandardImageSlide(Slide):
 			layout['body'].split_row(Layout(name='image'), Layout(name='text'))
 
 		layout['header'].update(
-			StandartHeader(
+			StandardHeader(
 				self.title,
 				slide_number,
 				total_slides,
