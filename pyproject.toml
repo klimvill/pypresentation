@@ -1,14 +1,14 @@
 [tool.poetry]
 name = "pypresentation"
-version = "0.1.1"
+version = "0.1.2"
 description = ""
 authors = ["Petr Rudichev <petrrudichev@gmail.com>"]
 license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.12"
-rich = "^13.8.0"
+python = "^3.8"
+rich = "^13.9.4"
 rich-pixels = "^3.0.1"
 keyboard = "^0.13.5"
 

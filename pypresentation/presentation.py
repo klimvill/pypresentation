@@ -1,3 +1,5 @@
+from typing import List
+
 import rich.repr
 from keyboard import read_event
 from rich.layout import Layout
@@ -16,7 +18,7 @@ class Presentation:
 	"""Класс для создания и управления презентацией."""
 
 	def __init__(self):
-		self._slides: list[Slide] = []
+		self._slides: List[Slide] = []
 
 	def add(self, slide: Slide) -> None:
 		"""Добавляет слайд в презентацию."""
